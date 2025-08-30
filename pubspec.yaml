@@ -11,6 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  collection: ^1.18.0
+  json_annotation: ^4.9.0
+  time_machine: ^0.9.17
 
 dev_dependencies:
   flutter_test:
