@@ -7,6 +7,7 @@ import 'package:fc_core/models/stickers.dart';
 import 'package:fc_core/widgets/chart_cell_widget.dart';
 import 'package:fc_core/widgets/chart_row_widget.dart';
 import 'package:fc_core/widgets/chart_widget.dart';
+import 'package:fc_core/widgets/sticker_selection_dialog.dart';
 import 'package:fc_core/widgets/sticker_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class CycleWidget extends StatefulWidget {
   final bool observationEditingEnabled;
   final bool showErrors;
   final bool autoStamp;
+  final bool enableYellow;
   final SoloCell? soloCell;
   final Widget? Function(Cycle?) rightWidgetFn;
   final Function()? onTapObservation;
@@ -58,6 +60,7 @@ class CycleWidget extends StatefulWidget {
     this.correctingEnabled = false,
     this.showErrors = false,
     this.autoStamp = true,
+    this.enableYellow = false,
     this.dayOffset = 0,
     this.soloCell,
     super.key,
@@ -77,6 +80,17 @@ class CycleWidgetState extends State<CycleWidget> {
       bottomCellCreator: _createObservationCell,
       rightWidget: widget.rightWidgetFn(widget.cycle),
     );
+  }
+
+  void _editSticker(int entryIndex, StickerWithText? sticker) {
+    setState(() {
+      if (widget.cycle == null) {
+        return;
+      }
+      var existingEntry = widget.cycle!.entries[entryIndex];
+      widget.cycle!.entries[entryIndex] =
+          existingEntry.withManualSticker(sticker);
+    });
   }
 
   ChartEntry? _getChartEntry(int entryIndex) {
@@ -181,7 +195,8 @@ class CycleWidgetState extends State<CycleWidget> {
         (soloingCell && (observation != null || entry?.manualSticker != null));
     Widget stickerWidget = StickerWidget(
       stickerWithText: sticker,
-      onTap: () {},
+      onTap: _showCorrectionDialog(
+          context, entryIndex, /*this is sketchy*/ entry?.manualSticker),
     );
     StickerWithText? stickerCorrection =
         widget.cycle?.stickerCorrections[entryIndex];
@@ -195,12 +210,34 @@ class CycleWidgetState extends State<CycleWidget> {
               stickerCorrection.sticker,
               stickerCorrection.text,
             ),
-            onTap: widget.onTapSticker ?? () {},
+            onTap:
+                _showCorrectionDialog(context, entryIndex, stickerCorrection),
           ),
         )
       ]);
     }
     return stickerWidget;
+  }
+
+  void Function() _showCorrectionDialog(BuildContext context, int entryIndex,
+      StickerWithText? existingCorrection) {
+    return () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StickerCorrectionDialog(
+            entryIndex: entryIndex,
+            cycle: widget.cycle!,
+            includeYellow: widget.enableYellow,
+            editingEnabled: widget.stampEditingEnabled,
+            existingCorrection: existingCorrection,
+            correctSticker: (cycleIndex, entryIndex, correction) {},
+            editSticker: (cycleIndex, entryIndex, correction) =>
+                _editSticker(entryIndex, correction),
+          );
+        },
+      );
+    };
   }
 }
 

@@ -41,6 +41,7 @@ class MyHomePage extends StatelessWidget {
         child: SimpleChartWidget(
           observations: [observations],
           startDate: LocalDate.today(),
+          enableYellowStamps: true,
         ),
       ),
     );

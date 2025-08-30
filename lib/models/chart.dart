@@ -130,7 +130,7 @@ class ChartEntry {
     );
   }
 
-  ChartEntry withManualSticker(StickerWithText stickerWithText) {
+  ChartEntry withManualSticker(StickerWithText? stickerWithText) {
     return ChartEntry(
         observationText: observationText,
         additionalText: additionalText,

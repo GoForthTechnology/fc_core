@@ -11,6 +11,7 @@ class ChartWidget extends StatelessWidget {
   final bool correctingEnabled;
   final bool showErrors;
   final bool autoStamp;
+  final bool enableYellow;
   final SoloCell? soloCell;
   final bool includeFooter;
   final Widget? Function(Cycle?) rightWidgetFn;
@@ -28,6 +29,7 @@ class ChartWidget extends StatelessWidget {
     this.soloCell,
     super.key,
     required this.rightWidgetFn,
+    this.enableYellow = false,
   });
 
   @override
@@ -83,6 +85,7 @@ class ChartWidget extends StatelessWidget {
         observationEditingEnabled: observationEditingEnabled,
         correctingEnabled: correctingEnabled,
         showErrors: showErrors,
+        enableYellow: enableYellow,
         dayOffset: slice.offset,
         soloCell: soloCell,
         autoStamp: autoStamp,

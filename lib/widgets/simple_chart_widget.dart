@@ -10,11 +10,13 @@ import 'package:time_machine/time_machine.dart';
 class SimpleChartWidget extends StatefulWidget {
   final List<List<String>> observations;
   final LocalDate startDate;
+  final bool enableYellowStamps;
 
   const SimpleChartWidget({
     super.key,
     required this.observations,
     required this.startDate,
+    required this.enableYellowStamps,
   });
 
   @override
@@ -33,9 +35,12 @@ class _SimpleChartWidgetState extends State<SimpleChartWidget> {
   @override
   Widget build(BuildContext context) {
     return ChartWidget(
-        chart: _charts().first,
-        controller: _controller,
-        rightWidgetFn: (c) => null);
+      chart: _charts().first,
+      controller: _controller,
+      rightWidgetFn: (c) => null,
+      stampEditingEnabled: true,
+      enableYellow: widget.enableYellowStamps,
+    );
   }
 
   List<Chart> _charts() {
