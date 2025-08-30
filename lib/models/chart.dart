@@ -8,6 +8,32 @@ part 'chart.g.dart';
 class Chart {
   final List<CycleSlice> cycles;
 
+  static List<Chart> fromCycles(List<Cycle> cycles, int numCyclesPerChart) {
+    List<CycleSlice> slices = [];
+    for (var cycle in cycles) {
+      for (var offset in cycle.getOffsets()) {
+        slices.add(CycleSlice(cycle, offset));
+      }
+    }
+    List<Chart> out = [];
+    List<CycleSlice> batch = [];
+    for (var slice in slices) {
+      if (batch.length < numCyclesPerChart) {
+        batch.add(slice);
+      } else {
+        out.add(Chart(batch));
+        batch = [slice];
+      }
+    }
+    if (out.isEmpty || batch.isNotEmpty) {
+      while (batch.length < numCyclesPerChart) {
+        batch.add(CycleSlice(null, 0));
+      }
+      out.add(Chart(batch));
+    }
+    return out;
+  }
+
   Chart(this.cycles);
 }
 

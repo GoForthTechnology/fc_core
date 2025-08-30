@@ -12,10 +12,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart' as time;
 
-abstract class ChartController {
-  time.LocalDate startOfCharting();
-  List<time.LocalDate> followUps();
-  time.LocalDate? currentFollowUpDate();
+class ChartController {
+  final time.LocalDate _startOfCharting;
+  late List<time.LocalDate> _followUps;
+  final time.LocalDate? _currentFollowUpDate;
+
+  ChartController(
+      {required time.LocalDate startOfCharting,
+      List<time.LocalDate> followUps = const [],
+      time.LocalDate? currentFollowUpDate})
+      : _startOfCharting = startOfCharting,
+        _currentFollowUpDate = currentFollowUpDate {
+    _followUps = followUps;
+  }
+
+  time.LocalDate startOfCharting() => _startOfCharting;
+  List<time.LocalDate> followUps() => _followUps;
+  time.LocalDate? currentFollowUpDate() => _currentFollowUpDate;
 }
 
 class CycleWidget extends StatefulWidget {
