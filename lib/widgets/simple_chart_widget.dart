@@ -11,12 +11,14 @@ class SimpleChartWidget extends StatefulWidget {
   final List<List<String>> observations;
   final LocalDate startDate;
   final bool enableYellowStamps;
+  final bool editingEnabled;
 
   const SimpleChartWidget({
     super.key,
     required this.observations,
     required this.startDate,
-    required this.enableYellowStamps,
+    this.enableYellowStamps = false,
+    this.editingEnabled = false,
   });
 
   @override
@@ -38,7 +40,7 @@ class _SimpleChartWidgetState extends State<SimpleChartWidget> {
       chart: _charts().first,
       controller: _controller,
       rightWidgetFn: (c) => null,
-      stampEditingEnabled: true,
+      stampEditingEnabled: widget.editingEnabled,
       enableYellow: widget.enableYellowStamps,
     );
   }

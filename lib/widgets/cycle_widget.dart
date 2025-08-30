@@ -93,6 +93,19 @@ class CycleWidgetState extends State<CycleWidget> {
     });
   }
 
+  void _correctSticker(int entryIndex, StickerWithText? sticker) {
+    setState(() {
+      if (widget.cycle == null) {
+        return;
+      }
+      if (sticker != null) {
+        widget.cycle!.stickerCorrections[entryIndex] = sticker;
+      } else {
+        widget.cycle!.stickerCorrections.remove(entryIndex);
+      }
+    });
+  }
+
   ChartEntry? _getChartEntry(int entryIndex) {
     if (widget.cycle == null) {
       return null;
@@ -231,7 +244,8 @@ class CycleWidgetState extends State<CycleWidget> {
             includeYellow: widget.enableYellow,
             editingEnabled: widget.stampEditingEnabled,
             existingCorrection: existingCorrection,
-            correctSticker: (cycleIndex, entryIndex, correction) {},
+            correctSticker: (cycleIndex, entryIndex, correction) =>
+                _correctSticker(entryIndex, correction),
             editSticker: (cycleIndex, entryIndex, correction) =>
                 _editSticker(entryIndex, correction),
           );
