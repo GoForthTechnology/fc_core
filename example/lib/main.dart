@@ -112,11 +112,16 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SimpleChartWidget(
-          observations: [observations],
+          cycles: Stream.value([
+            CycleData(
+              isPostPartum: true,
+              observations: observations,
+              startDate: LocalDate(2025, 7, 6),
+            ),
+          ]),
           startDate: LocalDate(2025, 7, 6),
           enableYellowStamps: true,
           editingEnabled: editingEnabled,
-          isPostPartum: true,
         ),
       ),
     );

@@ -8,20 +8,29 @@ import 'package:fc_core/src/widgets/cycle_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 
+class CycleData {
+  final LocalDate startDate;
+  final List<String> observations;
+  final bool isPostPartum;
+
+  CycleData(
+      {required this.startDate,
+      required this.observations,
+      required this.isPostPartum});
+}
+
 class SimpleChartWidget extends StatefulWidget {
-  final List<List<String>> observations;
+  final Stream<List<CycleData>> cycles;
   final LocalDate startDate;
   final bool enableYellowStamps;
   final bool editingEnabled;
-  final bool isPostPartum;
 
   const SimpleChartWidget({
     super.key,
-    required this.observations,
     required this.startDate,
+    required this.cycles,
     this.enableYellowStamps = false,
     this.editingEnabled = false,
-    this.isPostPartum = false,
   });
 
   @override
@@ -39,20 +48,33 @@ class _SimpleChartWidgetState extends State<SimpleChartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ChartWidget(
-      chart: _charts().first,
-      controller: _controller,
-      rightWidgetFn: (c) => null,
-      stampEditingEnabled: widget.editingEnabled,
-      enableYellow: widget.enableYellowStamps,
+    return StreamBuilder(
+      stream: widget.cycles,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const CircularProgressIndicator();
+        }
+        var cycles = snapshot.data!;
+        if (cycles.isEmpty) {
+          return const Text("No cycles to display.");
+        }
+        return ChartWidget(
+          chart: _charts(cycles).first,
+          controller: _controller,
+          rightWidgetFn: (c) => null,
+          stampEditingEnabled: widget.editingEnabled,
+          enableYellow: widget.enableYellowStamps,
+        );
+      },
     );
   }
 
-  List<Chart> _charts() {
+  List<Chart> _charts(List<CycleData> cycleDatas) {
     var currentDate = widget.startDate;
     List<Cycle> cycles = [];
-    for (var observationStrs in widget.observations) {
-      List<Observation> observations = observationStrs.mapIndexed((i, e) {
+    for (var cycleData in cycleDatas) {
+      List<Observation> observations =
+          cycleData.observations.mapIndexed((i, e) {
         try {
           return parseObservation(e);
         } catch (error) {
@@ -61,7 +83,7 @@ class _SimpleChartWidgetState extends State<SimpleChartWidget> {
         }
       }).toList();
       var renderedObservations = renderObservations(observations, null, null,
-          startDate: currentDate, postPartum: widget.isPostPartum);
+          startDate: currentDate, postPartum: cycleData.isPostPartum);
       currentDate = currentDate.addDays(renderedObservations.length);
 
       var entries =
