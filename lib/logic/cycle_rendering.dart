@@ -5,7 +5,7 @@ import 'package:time_machine/time_machine.dart';
 
 List<RenderedObservation> renderObservations(List<Observation> observations,
     LocalDate? startOfPrePeakYellowStamps, LocalDate? startOfPostPeak,
-    {LocalDate? startDate}) {
+    {LocalDate? startDate, bool postPartum = false}) {
   int daysOfFlow = 0;
   int daysOfMucus = 0;
   int consecutiveDaysOfNonPeakMucus = 0;
@@ -15,11 +15,13 @@ List<RenderedObservation> renderObservations(List<Observation> observations,
   LocalDate? currentDate = startDate;
   bool inEssentialSamenessPattern = true;
   List<int> pointsOfChange = [];
+  bool isPostPartum = postPartum;
 
   List<RenderedObservation> renderedObservations = [];
   for (int i = 0; i < observations.length; i++) {
     var observation = observations[i];
-    var isPostPeak = countsOfThree.getCount(CountOfThreeReason.peakDay, i) > 0;
+    var isPostPeak = !isPostPartum &&
+        countsOfThree.getCount(CountOfThreeReason.peakDay, i) > 0;
 
     if (observation.hasMucus) {
       daysOfMucus++;

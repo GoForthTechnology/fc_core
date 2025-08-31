@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:fc_core/logic/cycle_rendering.dart';
 import 'package:fc_core/logic/observation_parser.dart';
 import 'package:fc_core/models/chart.dart';
@@ -12,6 +13,7 @@ class SimpleChartWidget extends StatefulWidget {
   final LocalDate startDate;
   final bool enableYellowStamps;
   final bool editingEnabled;
+  final bool isPostPartum;
 
   const SimpleChartWidget({
     super.key,
@@ -19,6 +21,7 @@ class SimpleChartWidget extends StatefulWidget {
     required this.startDate,
     this.enableYellowStamps = false,
     this.editingEnabled = false,
+    this.isPostPartum = false,
   });
 
   @override
@@ -49,10 +52,16 @@ class _SimpleChartWidgetState extends State<SimpleChartWidget> {
     var currentDate = widget.startDate;
     List<Cycle> cycles = [];
     for (var observationStrs in widget.observations) {
-      List<Observation> observations =
-          observationStrs.map((e) => parseObservation(e)).toList();
-      var renderedObservations =
-          renderObservations(observations, null, null, startDate: currentDate);
+      List<Observation> observations = observationStrs.mapIndexed((i, e) {
+        try {
+          return parseObservation(e);
+        } catch (error) {
+          print("Exception parsing $e (index $i): $error");
+          return Observation();
+        }
+      }).toList();
+      var renderedObservations = renderObservations(observations, null, null,
+          startDate: currentDate, postPartum: widget.isPostPartum);
       currentDate = currentDate.addDays(renderedObservations.length);
 
       var entries =
