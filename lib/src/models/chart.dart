@@ -1,6 +1,6 @@
-import 'package:fc_core/logic/observation_parser.dart';
-import 'package:fc_core/models/rendered_observation.dart';
-import 'package:fc_core/models/stickers.dart';
+import 'package:fc_core/src/logic/observation_parser.dart';
+import 'package:fc_core/src/models/rendered_observation.dart';
+import 'package:fc_core/src/models/stickers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'chart.g.dart';

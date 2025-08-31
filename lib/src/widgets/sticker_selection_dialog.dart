@@ -1,6 +1,6 @@
-import 'package:fc_core/models/chart.dart';
-import 'package:fc_core/models/stickers.dart';
-import 'package:fc_core/widgets/sticker_widget.dart';
+import 'package:fc_core/src/models/chart.dart';
+import 'package:fc_core/src/models/stickers.dart';
+import 'package:fc_core/src/widgets/sticker_widget.dart';
 import 'package:flutter/material.dart';
 
 class StickerCorrectionDialog extends StatelessWidget {

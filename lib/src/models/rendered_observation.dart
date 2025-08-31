@@ -1,5 +1,5 @@
-import 'package:fc_core/models/instructions.dart';
-import 'package:fc_core/models/stickers.dart';
+import 'package:fc_core/src/models/instructions.dart';
+import 'package:fc_core/src/models/stickers.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:time_machine/time_machine.dart';
 

@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
-import 'package:fc_core/logic/cycle_rendering.dart';
-import 'package:fc_core/logic/observation_parser.dart';
-import 'package:fc_core/models/chart.dart';
-import 'package:fc_core/models/observation.dart';
-import 'package:fc_core/widgets/chart_widget.dart';
-import 'package:fc_core/widgets/cycle_widget.dart';
+import 'package:fc_core/src/logic/cycle_rendering.dart';
+import 'package:fc_core/src/logic/observation_parser.dart';
+import 'package:fc_core/src/models/chart.dart';
+import 'package:fc_core/src/models/observation.dart';
+import 'package:fc_core/src/widgets/chart_widget.dart';
+import 'package:fc_core/src/widgets/cycle_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 

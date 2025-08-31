@@ -1,6 +1,6 @@
-import 'package:fc_core/models/instructions.dart';
-import 'package:fc_core/models/observation.dart';
-import 'package:fc_core/models/rendered_observation.dart';
+import 'package:fc_core/src/models/instructions.dart';
+import 'package:fc_core/src/models/observation.dart';
+import 'package:fc_core/src/models/rendered_observation.dart';
 import 'package:time_machine/time_machine.dart';
 
 List<RenderedObservation> renderObservations(List<Observation> observations,

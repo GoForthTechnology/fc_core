@@ -1,5 +1,5 @@
-import 'package:fc_core/models/chart.dart';
-import 'package:fc_core/widgets/cycle_widget.dart';
+import 'package:fc_core/src/models/chart.dart';
+import 'package:fc_core/src/widgets/cycle_widget.dart';
 import 'package:flutter/material.dart';
 
 class ChartWidget extends StatelessWidget {

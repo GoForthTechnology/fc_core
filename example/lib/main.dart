@@ -1,4 +1,4 @@
-import 'package:fc_core/widgets/simple_chart_widget.dart';
+import 'package:fc_core/fc_core.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 

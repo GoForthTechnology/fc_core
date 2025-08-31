@@ -1,5 +1,5 @@
-import 'package:fc_core/models/stickers.dart';
-import 'package:fc_core/widgets/chart_cell_widget.dart';
+import 'package:fc_core/src/models/stickers.dart';
+import 'package:fc_core/src/widgets/chart_cell_widget.dart';
 import 'package:flutter/material.dart';
 
 class StickerWidget extends StatelessWidget {

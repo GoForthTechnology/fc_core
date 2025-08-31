@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:fc_core/models/observation.dart';
+import 'package:fc_core/src/models/observation.dart';
 
 Observation parseObservation(String input) {
   input = input.replaceAll("\n", "");
