@@ -1,6 +1,6 @@
 library fc_core;
 
-export 'models/instructions.dart' show Instruction;
-export 'models/instructions.dart' show Instructions;
+export 'src/models/instructions.dart' show Instruction;
+export 'src/models/instructions.dart' show Instructions;
 
-export 'widgets/simple_chart_widget.dart' show SimpleChartWidget;
+export 'src/widgets/simple_chart_widget.dart' show SimpleChartWidget;
